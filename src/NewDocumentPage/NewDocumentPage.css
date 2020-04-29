@@ -1,0 +1,41 @@
+@media print {
+    body {
+        background-color: red !important;
+    }
+
+    .previewContainer {
+        font-size: 9pt !important;
+    }
+
+    .previewContainer h1 {
+
+    }
+}
+
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 25mm 25mm 25mm 25mm;  
+} 
+ 
+.previewContainer {
+    padding: 1em 1em 4em 1em;
+    font-size: 1.0rem;
+    line-height: 1.5;
+}
+
+.previewContainer h1 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    display: block;
+}
+
+.previewContainer em {
+    font-style: italic;
+}
+
+.previewContainer code {
+    background-color: #eeeeee;
+}

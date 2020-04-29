@@ -1,14 +1,24 @@
 {
   "name": "latex-and-markdown",
+  "homepage": "https://www.user.tu-berlin.de/nguyenvi/marktex",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/database": "^0.6.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "firebase": "^7.14.2",
+    "katex": "^0.11.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-markdown": "^4.3.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-textarea-autosize": "^7.1.2",
+    "react-to-print": "^2.6.3",
+    "showdown": "^1.9.1",
+    "showdown-katex": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +40,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "plugins": [
+    [
+      "prismjs",
+      {
+        "languages": [
+          "markdown",
+          "latex"
+        ]
+      }
+    ]
+  ]
 }
