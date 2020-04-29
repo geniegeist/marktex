@@ -1,38 +1,16 @@
 import React, { Component } from 'react';
-import * as Showdown from 'showdown';
 import Editor from './Editor/Editor.js';
 import { database } from './../Firebase.js';
 import './NewDocumentPage.css';
 import ReactToPrint from 'react-to-print';
 import { withRouter } from 'react-router-dom';
-import showdownKatex from 'showdown-katex';
 import 'katex/dist/katex.min.css';
+import MarkdownIt from 'markdown-it';
+import texmath from 'markdown-it-texmath';
 
-Showdown.extension('targetlink', function () {
-    return [{
-        type: 'html',
-        regex: /(<a [^>]+?)(>.*<\/a>)/g,
-        replace: '$1 target="_blank"$2'
-    }];
-});
-
-const converter = new Showdown.Converter({
-    tables: true,
-    simplifiedAutoLink: true,
-    strikethrough: true,
-    tasklists: true,
-    extensions: ['targetlink', showdownKatex({
-        // maybe you want katex to throwOnError
-        throwOnError: false,
-        // disable displayMode
-        displayMode: true,
-        // change errorColor to blue
-        errorColor: '#1500ff',
-        delimiters: [
-            { left: "$", right: "$", display: false },
-            { left: "€", right: "€", display: true }
-        ]
-    })]
+const md = MarkdownIt().use(texmath, {
+    engine: require('katex'),
+    delimiters:'dollars'
 });
 
 const initialValue = "# Willkommen zu ErstiTex!\r\n\r\nHey! Dies ist dein erstes Dokument in `ErstiTex`. Mit diesem Editor kannst du einfach **Mathehausaufgaben** schreiben. Du kannst Formeln darstellen wie zum Beispiel\r\n$$\r\n  \\sum^n_{i=1} i = \\frac{n(n+1)}{2}.\r\n$$\r\n\r\n--- \r\n\r\n## Mathematische Formeln schreiben\r\n\r\nMit dem Dollarzeichen `$` schreibst du mathematische Ausdr\u00FCcke. Hier einige Beispiele:\r\n\r\n* `$f(x) = x^2 - \\frac{1}{2}$` ergibt $f(x) = x^2 - \\frac{1}{2}$\r\n* `$\\lim_{n \\to \\infty} x$` wird zu $\\lim_{n \\to \\infty} x$\r\n* `$$\\lim_{x \\to 0}\\sin(\\alpha x^2)$$` ergibt $$\\lim_{x \\to 0}\\sin(\\alpha x^2)$$\r\n\r\nIm letzten Beispiel benutzten wir `$$`; in diesem Fall wird die Formel *zentriert* und *in einer neuen Zeile dargestellt*.\r\n\r\n### Wichtige Kommandos\r\n\r\n* Reelle Zahlen, ganze Zahlen, ... (z.B. $\\R, \\Z, \\Q$): `$\\R, \\Z, \\Q$`\r\n* Griechische Buchstaben ($\\alpha, \\beta, \\gamma$): `$\\alpha, \\beta, \\gamma$`\r\n* Integrale ($\\int^{a}_{b} f(x) dx$): `\\int^{a}_{b} f(x) dx`\r\n\r\n**Falls ihr ein Zeichen sucht:** [Detexify](http://detexify.kirelabs.org/classify.html)\r\n\r\n\r\n---\r\n\r\n## Listen\r\n\r\nDu kannst auch ***Listen*** anfertigen, wie zum Beispiel\r\n\r\n* Brot,\r\n* Schinken,\r\n* K\u00E4se.\r\n \r\nOder doch eher eine *numerierte Liste*?\r\n\r\n1. Induktionsanfang: Sei $n = 0$.\r\n2. Induktionsbehauptung: Sei $n \\in \\N$ beliebig.\r\n3. Induktionsschritt: $n \\leadsto n + 1$"
@@ -60,7 +38,7 @@ class NewDocumentPage extends Component {
         });
 
         if (parseMarkTex(value)) {
-            this.setState({ htmlValue: converter.makeHtml(value) });
+            this.setState({ htmlValue: md.render(value) });
         }
 
 
@@ -88,7 +66,7 @@ class NewDocumentPage extends Component {
                     this.setState((state, props) => {
                         let { htmlValue } = state;
                         if (parseMarkTex(editorValue)) {
-                            htmlValue = converter.makeHtml(editorValue);
+                            htmlValue = md.render(editorValue);
                         }
                         return { editorValue, htmlValue };
                     });                    

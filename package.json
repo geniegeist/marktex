@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^7.2.1",
     "firebase": "^7.14.2",
     "katex": "^0.11.1",
+    "markdown-it": "^10.0.0",
+    "markdown-it-texmath": "^0.6.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
@@ -17,7 +19,6 @@
     "react-scripts": "3.4.1",
     "react-textarea-autosize": "^7.1.2",
     "react-to-print": "^2.6.3",
-    "showdown": "^1.9.1",
     "showdown-katex": "^0.8.0"
   },
   "scripts": {

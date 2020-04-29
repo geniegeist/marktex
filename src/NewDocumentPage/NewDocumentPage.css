@@ -1,3 +1,7 @@
+.previewContainer img {
+    max-width: 50%;
+}
+
 @media print {
     body {
         background-color: red !important;
